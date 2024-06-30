@@ -1,0 +1,37 @@
+<%- include("partials/header.ejs") %>
+
+    <div class="list">
+        <div class="options"><a href="/myBlogs/create" class="btn"> Create New</a></div>
+
+        <div class="blogList">
+            <div class="seprate"></div>
+            <% if (locals.blogs) { %>
+                
+                <% for(let i=0; i < blogs.length; i++){ %>
+                    <% if (i % 2==0) { %>
+                        <div class="manage dark">
+                            <% } else { %>
+                        <div class="manage light">
+                            <% } %>
+                            
+                            
+                            <p class="name">
+                                <%= blogs[i][0] %>
+                            </p>
+                            
+                            <div class="buttons">
+                                <button type="button" class="btn manage-btn" id="delete" value="Delete" onclick="deleteBlog('<%= i %>',true)"><img src="images/trash.svg" class="manageSvg"/></button>
+                                <button type="button" class="btn manage-btn" id="edit" value="Delete" onclick="editBlog('<%= i %>')"><img src="images/edit.svg" class="manageSvg"/></button>
+                            </div>
+                            
+                            
+                        </div>
+                        
+                        <% } %>
+                        <% } %>
+                        <div class="seprate"></div>
+                        </div>
+
+        </div>
+
+        <%- include("partials/footer.ejs") %>

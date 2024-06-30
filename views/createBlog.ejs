@@ -1,0 +1,24 @@
+<%- include("partials/header.ejs") %>
+
+    <form action="/submitBlog" method="POST" class="blogCreation">
+
+        <label for="blogTitle">Title:</label>
+
+            <textarea name="title" id="blogTitle" cols="30" rows="1" class="title textarea" maxlength="75"
+                placeholder="Enter Your Blog Title Here....." required></textarea>
+
+        <label for="blogAbout">About:</label>
+            <textarea name="about" id="blogAbout" cols="30" rows="1" class="aboutBlog textarea" maxlength="300"
+                placeholder="Enter Your About of Blog Here......."></textarea>
+        
+
+        <label for="blog">Blog:</label>
+            <textarea name="blog" id="blog" cols="30" rows="10" class="blog textarea" maxlength="5000"
+                placeholder="Enter Your Blog Here..." required></textarea>
+        
+
+        <input type="submit" name="submit" id="submit" value="Submit" />
+
+    </form>
+
+    <%- include("partials/footer.ejs") %>

@@ -1,0 +1,54 @@
+<%- include("partials/header.ejs") %>
+    <% if(locals.id) { %>
+        <form action="/submitBlog" onsubmit="deleteBlog('<%= id %>', false)" method="POST" class="blogCreation">
+        <% } else { %>
+        <form action="/error" method="POST" class="blogCreation">
+    <% } %>
+        <label for="blogTitle">Title:</label>
+        <% if (locals.blog && blog[0]) { %>
+
+            <textarea name="title" id="blogTitle" cols="30" rows="1" class="title textarea" maxlength="75"
+                placeholder="Enter Your Blog Title Here....." required><%= blog[0] %>  </textarea>
+
+        <% } else { %>
+
+            <textarea name="title" id="blogTitle" cols="30" rows="1" class="title textarea" maxlength="75"
+                placeholder="Enter Your Blog Title Here....." required></textarea>
+        
+        <% } %>
+        
+
+        <label for="blogAbout">About:</label>
+        
+        <% if (locals.blog && blog[1]) { %>
+
+            <textarea name="about" id="blogAbout" cols="30" rows="1" class="aboutBlog textarea" maxlength="300"
+            placeholder="Enter Your About of Blog Here......."><%= blog[1] %></textarea>
+
+        <% } else { %>
+
+            <textarea name="about" id="blogAbout" cols="30" rows="1" class="aboutBlog textarea" maxlength="300"
+            placeholder="Enter Your About of Blog Here......."></textarea>
+
+        <% } %>
+
+        <label for="blog">Blog:</label>
+
+        <% if (locals.blog && blog[2]) { %>
+
+        <textarea name="blog" id="blog" cols="30" rows="10" class="blog textarea" maxlength="5000"
+        placeholder="Enter Your Blog Here..." required><%= blog[2] %></textarea>
+
+        <% } else { %>
+
+        <textarea name="blog" id="blog" cols="30" rows="10" class="blog textarea"
+        maxlength="5000" placeholder="Enter Your Blog Here..." required></textarea>
+
+        <% } %>
+                                    
+        <input type="submit" name="submit" id="submit" value="Submit" />
+
+
+    </form>
+
+    <%- include("partials/footer.ejs") %>
