@@ -1,17 +1,16 @@
+import { getUserName } from "./auth.js";
 import { app } from "./config/config.js";
-import { setDoc, getDoc, deleteDoc, updateDoc, getDocs, doc, getFirestore, collection } from "firebase/firestore"
+import { setDoc, getDoc, deleteDoc, updateDoc, getDocs, doc, getFirestore, collection, query, where, addDoc } from "firebase/firestore"
 
 const db = getFirestore(app)
 const collectionName = "blogs"
 
-function createBlog(title, about, blog){
+async function createBlog(title, about, blog, owner){
     try {
-        const blogRef = doc(db, collectionName);
-        setDoc(blogRef, {
-            title,
-            about,
-            blog,
-        })
+        const ownerName = await getUserName(owner)
+        const blogObject = await addDoc(collection(db, collectionName), { title, about, blog, owner, ownerName});
+
+        return blogObject;
     } catch (error) {
         console.log(error)
     }
@@ -44,6 +43,7 @@ async function getAllBlogs() {
       const blogCollectionRef = collection(db, collectionName);
       const snapshot = await getDocs(blogCollectionRef);
       const blogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
       return blogs;
     } catch (error) {
       console.log(error);
@@ -66,8 +66,8 @@ async function getAllBlogs() {
   
   async function getBlogByUserId(userId) {
     try {
-      const blogCollectionRef = collection(db, "users");
-      const q = query(blogCollectionRef, where("userId", "==", userId));
+      const blogCollectionRef = collection(db, collectionName);
+      const q = query(blogCollectionRef, where("owner", "==", userId));
       const snapshot = await getDocs(q);
       const blogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       return blogs;

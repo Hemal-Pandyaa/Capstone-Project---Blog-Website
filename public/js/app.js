@@ -24,15 +24,14 @@ function request(url, type) {
     return fetch(url,{
         method:type});
 }
-function deleteBlog(id){
+function deleteBlog(id, redirect){
     const url = "/myBlogs/delete/" + id + "/"
-    console.log(url);
     request(url, "DELETE").then(response => {
-        console.log(response);
         if(response.ok) {
             window.location.href ="/myBlogs";
         }
     });
+    if(redirect) window.location.href = "/"
 }
 
 

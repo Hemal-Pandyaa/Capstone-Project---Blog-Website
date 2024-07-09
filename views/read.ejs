@@ -1,0 +1,11 @@
+<%- include('partials/header') %>
+
+<div class="read-container">
+    <div class="read-item">
+        <h1 class="read-title"><%= blog.title.trim() %></h1>
+        <p class="read-about"><strong>About:</strong> <%= blog.about %></p>
+        <p class="read-blog"><%= blog.blog %></p>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

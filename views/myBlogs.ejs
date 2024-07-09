@@ -16,12 +16,12 @@
                             
                             
                             <p class="name">
-                                <%= blogs[i][0] %>
+                                <%= blogs[i].title %>
                             </p>
                             
                             <div class="buttons">
-                                <button type="button" class="btn manage-btn" id="delete" value="Delete" onclick="deleteBlog('<%= i %>',true)"><img src="images/trash.svg" class="manageSvg"/></button>
-                                <button type="button" class="btn manage-btn" id="edit" value="Delete" onclick="editBlog('<%= i %>')"><img src="images/edit.svg" class="manageSvg"/></button>
+                                <button type="button" class="btn manage-btn" id="delete" value="Delete" onclick="deleteBlog('<%= blogs[i].id %>', true)"><img src="images/trash.svg" class="manageSvg"/></button>
+                                <button type="button" class="btn manage-btn" id="edit" value="Delete" onclick="editBlog('<%= blogs[i].id %>')"><img src="images/edit.svg" class="manageSvg"/></button>
                             </div>
                             
                             

@@ -50,9 +50,18 @@ async function getCurrentUser(){
     }
 }
 
+async function getUserName(){
+    try{
+        return auth.currentUser.displayName;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export {
     signUp,
     signIn,
     logOut,
     getCurrentUser,
+    getUserName
 }

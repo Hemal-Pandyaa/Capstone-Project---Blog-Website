@@ -8,7 +8,7 @@ import morgan from "morgan";
 import bodyParser from "body-parser";
 //* nodemailer for cotact us page
 import nodemailer from "nodemailer";
-import { deleteBlog, getBlogById, getBlogByUserId } from "./public/backend/blogs.js";
+import { deleteBlog, getBlogById, getBlogByUserId, createBlog, getAllBlogs, editBlog } from "./public/backend/blogs.js";
 import dotenv from "dotenv";
 import { getCurrentUser, logOut, signIn, signUp } from "./public/backend/auth.js";
 dotenv.config()
@@ -36,7 +36,6 @@ async function sendMail(name,mail,message){
             pass: process.env.pass,
         },
     };
-    console.log(config)
     const data = {
         to: process.env.mail,
         subject: mail,
@@ -75,9 +74,11 @@ app.post("/submit",async (req,res) => {
     res.status(200)
 })
 
-app.get("/myBlogs",(req,res)=>{
+app.get("/myBlogs", async (req,res)=>{
+    const blogs = await getBlogByUserId(res.locals.user?.uid)
+    console.log(blogs)
     let data = {
-        blogs: getBlogByUserId(res.locals.user.uid)
+        blogs: blogs
     };
     res.render("myBlogs.ejs", data);
     res.status(200)
@@ -95,22 +96,26 @@ app.post("/submitBlog", (req,res) => {
     let about = req.body["about"];
     let content = req.body["blog"];
 
-    createBlog(title, about, content)
+    createBlog(title, about, content, res.locals.user.uid)
 
     res.status(200)
 
 });
 
-app.delete(`/myBlogs/delete/:id`, (req,res) => {
+app.delete(`/myBlogs/delete/:id`, async  (req,res) => {
     var id = req.params.id;
-    deleteBlog(id);
+    await deleteBlog(id);
+
+    res.redirect('/');
 });
 
-app.put("/myBlogs/edit/:i", (req, res) => {
-    var i = req.params.i;
+app.put("/myBlogs/edit/:id", async (req, res) => {
+    var id = req.params.id;
+    const blog = await getBlogById(id);
+    console.log(blog)
     const data = {
-        blog: getBlogById(i),
-        id : i
+        blog: blog,
+        id : id
     };
     res.render("editBlog.ejs", data);
 });
@@ -119,8 +124,14 @@ app.get("/login" , (req, res) => {
     res.render("login.ejs");
 })
 
-app.post("/authLogin" , (req, res) => {
-    signIn(req.body?.email, req.body?.password);
+app.get("/read/:id", async (req, res) => {  
+    const id = req.params.id;
+    const blog = await getBlogById(id);
+    res.render("read.ejs", {blog: blog});
+})
+
+app.post("/authLogin" , async (req, res) => {
+    await signIn(req.body?.email, req.body?.password);
     res.redirect("/");
 })
 
@@ -128,19 +139,30 @@ app.get("/signUp" , (req, res) => {
     res.render("signUp.ejs");
 })
 
-app.post("/authSignUp" , (req, res) => {
-    signUp(req.body?.email, req.body?.password, req.body?.name);
+app.get("/explore", async (req, res) => {
+    let data = {
+        blogs: await getAllBlogs()
+    };
+    res.render("explore.ejs", data);
+})
+
+app.post("/authSignUp" , async (req, res) => {
+    await signUp(req.body?.email, req.body?.password, req.body?.name);
     res.redirect("/")
 })
 
-app.get("/logOut", (req, res) => {
-    logOut();
+app.get("/logOut", async (req, res) => {
+    await logOut();
     res.redirect("/");
 })
 
 app.get("/error", (req,res) => {
     res.send("<h1> An error Ocuured </h1>");
 });
+
+app.get("*", (req, res) => {
+    res.send("Page Not Found!")
+})
 
 
 app.listen(port, () => {

@@ -1,0 +1,17 @@
+<%- include('partials/header', { title: 'Explore' }) %>
+
+<div class="explore-container">
+    <section class="explore-section">
+        <h1 class="explore-title">Explore. Know What Other Thinks!</h1>
+        <div class="explore-list">
+            <% blogs.forEach((blog, index) => { %>
+                <div class="<%= index % 2 === 0 ? 'dark' : 'light' %> explore-item" onclick="window.location.href = 'read/' + '<%= blog.id %>'">
+                    <h2 class="explore-item-title"><%= blog.title.trim() %></h2>
+                    <p class="explore-item-about"><%= blog.about %></p>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+</div>
+
+<%- include('partials/footer') %>

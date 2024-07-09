@@ -432,7 +432,7 @@ a.btn {
 .seprate{
     width: 100vw;
     height: 5px;
-    background-color: rgb(200,200,200);
+    background-color: rgb(101, 101, 101);
     max-width: 100%;
 }
 
@@ -572,4 +572,97 @@ a.btn {
     }
 
     
+}
+
+.explore-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    margin-top: calc(5rem + 50px); /* Adjust margin to account for the navigation bar */
+}
+
+.explore-title {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.explore-item {
+    width: 80%;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.explore-item h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.explore-item p {
+    font-size: 1.2rem;
+}
+
+.dark {
+    background-color: #333;
+    color: #fff;
+}
+
+.light {
+    background-color: #cccccc;
+    color: #333;
+}
+
+/* Example of alternating dark and light classes */
+.explore-item:nth-child(odd) {
+    background-color: #333;
+    color: #fff;
+}
+
+.explore-item:nth-child(even) {
+    background-color: #cccccc;
+    color: #333;
+}
+
+/* Common styles for read page */
+.read-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    margin-top: calc(5rem + 50px); /* Adjust margin to account for the navigation bar */
+}
+
+.read-item {
+    width: 80%;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.read-title {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.read-blog {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+.read-about,
+.read-owner {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.read-about strong,
+.read-owner strong {
+    font-weight: bold;
 }
