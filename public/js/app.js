@@ -24,8 +24,8 @@ function request(url, type) {
     return fetch(url,{
         method:type});
 }
-function deleteBlog(id, redirect){
-    const url = "/myBlogs/delete/" + id + "/" + redirect
+function deleteBlog(id){
+    const url = "/myBlogs/delete/" + id + "/"
     console.log(url);
     request(url, "DELETE").then(response => {
         console.log(response);

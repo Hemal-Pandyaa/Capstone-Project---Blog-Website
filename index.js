@@ -8,10 +8,22 @@ import morgan from "morgan";
 import bodyParser from "body-parser";
 //* nodemailer for cotact us page
 import nodemailer from "nodemailer";
+import { deleteBlog, getBlogById, getBlogByUserId } from "./public/backend/blogs.js";
+import dotenv from "dotenv";
+import { getCurrentUser, logOut, signIn, signUp } from "./public/backend/auth.js";
+dotenv.config()
 
 const app = express();
+app.set('view engine', 'ejs')
 const port = process.env.PORT || 3000;
 const blogs = [["What is the purpost of life??", "asjflasjdflkasjdlfjalsdf","ajsdlfkajlskjflasjdf"], ["Learning how to learn", "aslkdfjaslkdfjalksdjf", "skjfasjdflasjdlfajsldf"]];
+
+app.use( async (req, res, next) => {
+    const currentUser = await getCurrentUser();
+    res.locals.loggedIn = currentUser ? currentUser : false;
+    res.locals.user = currentUser
+    next();
+});
 
 async function sendMail(name,mail,message){
     const config = {
@@ -24,7 +36,7 @@ async function sendMail(name,mail,message){
             pass: process.env.pass,
         },
     };
-
+    console.log(config)
     const data = {
         to: process.env.mail,
         subject: mail,
@@ -65,7 +77,7 @@ app.post("/submit",async (req,res) => {
 
 app.get("/myBlogs",(req,res)=>{
     let data = {
-        blogs: blogs
+        blogs: getBlogByUserId(res.locals.user.uid)
     };
     res.render("myBlogs.ejs", data);
     res.status(200)
@@ -83,36 +95,53 @@ app.post("/submitBlog", (req,res) => {
     let about = req.body["about"];
     let content = req.body["blog"];
 
-    let blog = [title,about,content];
-    blogs.push(blog);
+    createBlog(title, about, content)
 
     res.status(200)
 
 });
 
-app.delete(`/myBlogs/delete/:i/:redirect`, (req,res) => {
-    var i = req.params.i;
-    console.log(i);
-    console.log("Deleted!! " + blogs[i][0])
-    blogs.splice(i, 1);
-    const redirect = req.params.redirect;
-    // if(redirect == true){
-        res.render("myBlogs.ejs");
-    // }
+app.delete(`/myBlogs/delete/:id`, (req,res) => {
+    var id = req.params.id;
+    deleteBlog(id);
 });
 
 app.put("/myBlogs/edit/:i", (req, res) => {
     var i = req.params.i;
     const data = {
-        blog: blogs[i],
+        blog: getBlogById(i),
         id : i
     };
     res.render("editBlog.ejs", data);
 });
 
+app.get("/login" , (req, res) => {
+    res.render("login.ejs");
+})
+
+app.post("/authLogin" , (req, res) => {
+    signIn(req.body?.email, req.body?.password);
+    res.redirect("/");
+})
+
+app.get("/signUp" , (req, res) => {
+    res.render("signUp.ejs");
+})
+
+app.post("/authSignUp" , (req, res) => {
+    signUp(req.body?.email, req.body?.password, req.body?.name);
+    res.redirect("/")
+})
+
+app.get("/logOut", (req, res) => {
+    logOut();
+    res.redirect("/");
+})
+
 app.get("/error", (req,res) => {
     res.send("<h1> An error Ocuured </h1>");
 });
+
 
 app.listen(port, () => {
     console.log(`Server Running On Port ${port}`);

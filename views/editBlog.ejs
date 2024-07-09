@@ -1,6 +1,6 @@
 <%- include("partials/header.ejs") %>
     <% if(locals.id) { %>
-        <form action="/submitBlog" onsubmit="deleteBlog('<%= id %>', false)" method="POST" class="blogCreation">
+        <form action="/submitBlog" onsubmit="deleteBlog('<%= id %>')" method="POST" class="blogCreation">
         <% } else { %>
         <form action="/error" method="POST" class="blogCreation">
     <% } %>

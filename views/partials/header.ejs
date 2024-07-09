@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Protest+Strike&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" type="text/css" href="/styles/main.css" />
+        <title>Blog Site</title>
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Protest+Strike&display=swap"
-  rel="stylesheet">
-  <link rel="stylesheet"  type="text/css" href="/styles/main.css" />
-  <title>Blog Site</title>
-</head>
-
-<body>
-  <header>
-    <nav>
-      <div class="Site">
-        <p><a href="/">Bloggers.in</a></p>
-      </div>
-      <div class="navigation">
-        <a href="/">Home</a>
-        <a href="/contact">Contact</a>
-        <a href="/myBlogs">My Blogs</a>
-      </div>
-    </nav>
-  </header>
-  <main>
+    <body>
+        <header>
+            <nav>
+                <div class="Site">
+                    <p><a href="/">Bloggers.in</a></p>
+                </div>
+                <div class="navigation">
+                    <a href="/">Home</a>
+                    <a href="/contact">Contact</a>
+                    <% if(locals.loggedIn){ %>
+                      <a href="/myBlogs">My Blogs</a>
+                      <a href="/logOut">Log Out</a>
+                    <% } else { %>
+                      <a href="/signUp">Sign Up</a>
+                      <a href="/login">Login</a>
+                    <% }  %>
+                </div>
+            </nav>
+        </header>
+        <main></main>
+    </body>
+</html>
