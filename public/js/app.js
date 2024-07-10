@@ -52,3 +52,12 @@ function editBlog(id) {
     })
     .catch(error => console.error(error));
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navList = document.querySelector('.nav-list');
+
+    navToggle.addEventListener('click', function () {
+        navList.classList.toggle('active');
+    });
+});

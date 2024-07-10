@@ -666,3 +666,76 @@ a.btn {
 .read-owner strong {
     font-weight: bold;
 }
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 21px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+}
+
+.nav-toggle:focus {
+    outline: none;
+}
+
+.hamburger, .hamburger::before, .hamburger::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 3px;
+    background: whitesmoke;
+    border-radius: 3px;
+    position: relative;
+    transition: all 0.3s;
+}
+
+.hamburger::before, .hamburger::after {
+    position: absolute;
+}
+
+.hamburger::before {
+    top: -10px;
+}
+
+.hamburger::after {
+    bottom: -10px;
+}
+
+.nav-list {
+    display: flex;
+}
+
+@media (max-width: 1300px) {
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-list {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        background-color: rgb(231, 174, 69);
+        position: absolute;
+        top: 5rem;
+        left: 0;
+    }
+
+    .nav-list.active {
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        gap: 80px;
+    }
+
+    nav {
+        padding: 20px 1rem;
+    }
+}
+
