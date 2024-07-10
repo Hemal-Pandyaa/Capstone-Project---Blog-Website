@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "express server.js && ejs --output build/templates build/views",
+    "build": "netlify deploy --prod",
     "start": "node server.js"
   },
   "type": "module",
