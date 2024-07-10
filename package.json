@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "build": "echo 'No build step required' ",
-    "postinstall": "npm run build"
+    "build": "npm run build:server && npm run build:client",
+    "build:server": "npm run build:server:js",
+    "build:server:js": "babel server --out-dir functions",
+    "build:client": "npm run build:client:js && npm run build:client:css",
+    "build:client:js": "webpack",
+    "build:client:css": "postcss src/css/styles.css -o build/css/styles.css"
   },
   "type": "module",
   "author": "Hemal Pandya",
